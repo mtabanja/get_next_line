@@ -1,7 +1,5 @@
 #include "get_next_line.h"
 
-// TO DOS
-// PUT MY OWN LIBFT
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
