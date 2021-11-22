@@ -27,7 +27,7 @@ static void	split_and_update(char **save, char **line)
 	}
 }
 
-void	save_buff_in_save(char **save, char *buff)
+static void	save_buff_in_save(char **save, char *buff)
 {
 	char	*tmp;
 
@@ -41,8 +41,6 @@ void	save_buff_in_save(char **save, char *buff)
 		free(tmp);
 	}
 }
-
-//=====================CHECK ABOUT SAVE SIZE LATER=====================//
 
 char	*get_next_line(int fd)
 {
