@@ -2,8 +2,6 @@
 
 // TO DOS
 // PUT MY OWN LIBFT
-
-
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
@@ -14,34 +12,31 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-
-char *ft_strdup(const char *s1)
+char	*ft_strdup(const char *str1)
 {
-	char	*str;
-	size_t	i;
+	char	*str2;
+	int		i;
 
-	if (!s1)
-		return (NULL);
-	str = (char*)malloc(sizeof(*s1) * (ft_strlen(s1) + 1));
-	if (!str)
-		return (NULL);
+	str2 = (char *)malloc(sizeof(char) * (ft_strlen(str1) + 1));
+	if (str2 == NULL)
+		return (0);
 	i = 0;
-	while (s1[i])
+	while (str1[i])
 	{
-		str[i] = s1[i];
+		str2[i] = str1[i];
 		i++;
 	}
-	str[i] = 0;
-	return (str);
+	str2[i] = 0;
+	return (str2);
 }
 
-char *ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	size_t	j;
 	char	*str;
 
-	str = (char*)malloc(sizeof(*s) * (len + 1));
+	str = (char *)malloc(sizeof(*s) * (len + 1));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -59,30 +54,31 @@ char *ft_substr(char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-
-char *ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*str;
-	size_t	i;
-	size_t	j;
+	char	*join;
+	int		len;
+	int		i;
 
-	str = (char*)malloc(
-		sizeof(*s1) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!str)
-		return (NULL);
+	if (!s1 || !s2)
+		return (0);
+	len = (ft_strlen((char *)s1) + ft_strlen((char *)s2)) + 1;
+	join = malloc(len * sizeof(char));
+	if (!join)
+		return (0);
 	i = 0;
-	j = 0;
-	while (s1[i])
+	while (*s1)
 	{
-		str[j++] = s1[i];
+		join[i] = *s1;
+		s1++;
 		i++;
 	}
-	i = 0;
-	while (s2[i])
+	while (*s2)
 	{
-		str[j++] = s2[i];
+		join[i] = *s2;
+		s2++;
 		i++;
 	}
-	str[j] = 0;
-	return (str);
+	join[i] = 0;
+	return (join);
 }
