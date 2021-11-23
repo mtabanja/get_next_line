@@ -34,7 +34,14 @@ static int	save_buff_in_save(char **save, char *buff)
 
 	i = 0;
 	if (!*save)
+	{
 		*save = ft_strdup(buff);
+		if (!*save)
+		{
+			free(*save);
+			exit(0);
+		}
+	}
 	else
 	{
 		tmp = ft_strjoin(*save, buff);
@@ -54,7 +61,6 @@ char	*get_next_line(int fd)
 	static char	*save[4100];
 	char		*buff;
 	char		*line;
-	int			i;
 	int			rd;
 
 	rd = 1;
@@ -65,7 +71,6 @@ char	*get_next_line(int fd)
 		rd = read(fd, buff, BUFFER_SIZE);
 		if (rd <= 0)
 			break ;
-		i = 0;
 		buff[rd] = '\0';
 		if (save_buff_in_save(&save[fd], buff))
 			break ;

@@ -2,11 +2,8 @@
 # define GET_NEXT_LINE_H
 
 # include <fcntl.h>
-// # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-// # include <sys/types.h>
-// # include <sys/uio.h>
 # include <unistd.h>
 
 char	*get_next_line(int fd);
