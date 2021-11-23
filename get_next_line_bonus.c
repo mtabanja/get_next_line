@@ -13,7 +13,7 @@ static void	split_and_update(char **save, char **line)
 			*line = ft_substr(*save, 0, i + 1);
 			tmp = ft_strdup(&save[0][i + 1]);
 			free(*save);
-			save[0] = ft_strdup(tmp);
+			*save = ft_strdup(tmp);
 			free(tmp);
 			return ;
 		}
