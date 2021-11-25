@@ -1,3 +1,13 @@
+// # ifndef malloc 
+// int g_malloc_cnt;
+// # include <stdlib.h> 
+// # define malloc(x) (g_malloc_cnt++ == MALLOC_COUNT ? ((void*)0) : malloc(x)) 
+// # endif
+
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 1
+#endif // !BUFFER_SIZE 1
+
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 

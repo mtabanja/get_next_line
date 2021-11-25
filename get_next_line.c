@@ -1,6 +1,16 @@
 #include "get_next_line.h"
 
-static void	split_and_update(char **save, char **line)
+int	_free(char **save)
+{
+	if (!*save)
+	{
+		free(*save);
+		return (-1);
+	}
+	return (1);
+}
+
+static int	split_and_update(char **save, char **line)
 {
 	int		i;
 	char	*tmp;
@@ -15,16 +25,18 @@ static void	split_and_update(char **save, char **line)
 			free(*save);
 			*save = ft_strdup(tmp);
 			free(tmp);
-			return ;
+			return (!_free(save));
 		}
 		else if (save[0][i + 1] == '\0')
 		{
 			*line = *save;
 			*save = 0;
-			return ;
+			free(*save);
+			return (1);
 		}
 		i++;
 	}
+	return (1);
 }
 
 static int	save_buff_in_save(char **save, char *buff)
@@ -36,11 +48,8 @@ static int	save_buff_in_save(char **save, char *buff)
 	if (!*save)
 	{
 		*save = ft_strdup(buff);
-		if (!*save)
-		{
-			free(*save);
-			exit(0);
-		}
+		if (_free(save) == -1)
+			return (-1);
 	}
 	else
 	{
@@ -48,6 +57,8 @@ static int	save_buff_in_save(char **save, char *buff)
 		free(*save);
 		*save = ft_strdup(tmp);
 		free(tmp);
+		if (_free(save) == -1)
+			return (-1);
 	}
 	while (save[0][i] && save[0][i] != '\n')
 		i++;
@@ -62,21 +73,25 @@ char	*get_next_line(int fd)
 	char		*buff;
 	char		*line;
 	int			rd;
+	int			fail_check;
 
 	rd = 1;
 	line = 0;
-	buff = malloc(BUFFER_SIZE * sizeof(char));
+	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	while (rd > 0)
 	{
 		rd = read(fd, buff, BUFFER_SIZE);
 		if (rd <= 0)
 			break ;
 		buff[rd] = '\0';
-		if (save_buff_in_save(&save[fd], buff))
+		fail_check = save_buff_in_save(&save[fd], buff);
+		if (fail_check == 1 || fail_check == -1)
 			break ;
 	}
-	if (save[fd] && rd >= 0)
-		split_and_update(&save[fd], &line);
+	if (rd >= 0 && save[fd] && fail_check >= 0)
+		fail_check = split_and_update(&save[fd], &line);
+	if (fail_check == -1)
+		line = 0;
 	free(buff);
 	return (line);
 }
